@@ -7,7 +7,7 @@ import useCartStore from "@/store/cartStore";
 import { Product } from "@/store/interfaces";
 
 export default function TabOneScreen() {
-  const { addToCart, removeFromCart, items } = useCartStore();
+  const { addToCart, removeFromCart, cart } = useCartStore();
   const renderItem: ListRenderItem<Product & { quantity?: number }> = ({ item }) => {
     return (
       <View style={styles.cartContainer}>
@@ -25,7 +25,9 @@ export default function TabOneScreen() {
           >
             <Ionicons name="add-circle-outline" size={24} color="black" />
           </TouchableOpacity>
-          <Text style={{ padding: 10 }}>{item.quantity ?? 0}</Text>
+
+          <Text style={{ padding: 10 }}>{cart.find((product) => product.id === item.id)?.quantity ?? 0}</Text>
+
           <TouchableOpacity
             onPress={() => {
               removeFromCart(item);
